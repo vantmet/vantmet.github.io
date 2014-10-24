@@ -1,0 +1,31 @@
+---
+layout: post
+title: Why I learnt to stop worrying and love LVM
+date: 2010-05-15 12:29:59.000000000 -07:00
+categories:
+- Linux
+tags:
+- linux
+- lvm
+- raid
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+author: 
+---
+<p>A couple of days ago my home server fell over. It's a gentoo box; running software raid1, with LVM on top, and acts as a web server, mail server, iSCSI server, IPv6 test bed etc etc. Basically it does everything I've needed to do on Linux at work over the years, and needed to test first.</p>
+<p>The poor thing often falls over, it sits in a small, unventilated room, it doesn't have the best supply if power. I thought nothing of if when it went down again. PITA, but just a reboot when i got home from work. Well, it turns out the drives were failing. Mdadm was reporting degraded raid sets. </p>
+<p>First things first, I pulled the most obviously bad disk. Rebooted. Success!   Stayed up another day. Then another failure, looks like it's still having trouble Reading from disk. Problem, as I have no spare disks. I do have a laptop drive, from a previous machine, I use it for portable storage on a small USB caddy.</p>
+<p>So last night I set to getting the server back up. Copied everything off the laptop drive and plugged it into the server, booted off a gentoo install disk.</p>
+<p>Plus point no. 1: 2.5" SATA drives use thd same power/connections as their bigger brothers, no converters needed!</p>
+<p>Next job was to mirror as best i could the origional drive's partition table, not easy as the laptop drive was 30% smaller! Fortunatly the iSCSI partition is ok staying on the old disk until I get chance to move it, it won't degrade with the power off, and the rest will fit. </p>
+<p>The first three partitions: boot, swap and root were created exactly the same size as the origionals and dd'd accross. That gave me a good base, and a quick fsck showed the copy had gone well. The final stage was to pull the LVM magic.</p>
+<p>First step was to bring up the old lvm partition, and activate. Unfortunately vgscan didn't see it. I scratched my head, then decided to mount the old root, and see if I had an LVM backup config I could use. Interstingly, the partition wouldn't mount, it stated that the filesystem was unrecognised. Then I remembered the raid. Software raid puts a superblock at the start of the partition, enought to confuse the filesystem autodetect, but not enough to corrupt anything. Using the -t ext3 option mounted the drive. </p>
+<p>This made me think, perhaps LVM was having the same problem? So I fired up mdadm, and assembeled a degraded raid- mdadm --assemble /dev/md4 /dev/sdb4 none</p>
+<p>Then repeated the vgscan, and it found the volume group. </p>
+<p>Now that I had the old volume group up and running, I could create a new pv on the new partition, and add it to the group.</p>
+<p>The final job was to move the vital extents to the new drive. A couple of things could be just dropped(/use/portage/distfiles for example) and the rest were moved over a group of extents at a time. The iSCSI partition was left where it was for the moment. </p>
+<p>A few fscks later, I had all of the new drives mounted, and a chroot. Grub setup as it was a new drive, and grub conf altered to reflect the new non-raid status. Now the server is running, albeit slower, and with no raid, until I get a couple of new disks. </p>
+<p>Sometimes abstractions can be bloody useful.  </p>

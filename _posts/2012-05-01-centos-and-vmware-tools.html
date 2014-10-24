@@ -1,0 +1,36 @@
+---
+layout: post
+title: Centos and VMware tools
+date: 2012-05-01 08:38:32.000000000 -07:00
+categories:
+- Linux
+- VMware
+tags:
+- CentOS
+- linux
+- VMware
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+  _wpas_done_linkedin: '1'
+  publicize_results: a:1:{s:7:"twitter";a:1:{i:84584618;a:2:{s:7:"user_id";s:7:"vAntMet";s:7:"post_id";s:18:"197243596729106432";}}}
+  _wpas_done_twitter: '1'
+author: 
+---
+<p>I found a funky blog post detailing the steps to get VMware tools from the official vmware repo. The details below are for 4.1 but it should be easy enough to tweak for other versions of ESX...</p>
+<p><a title="Eanualis' Blog" href="http://www.emanuelis.eu/2012/01/06/how-to-install-vmware-tools-to-centos-via-yum-repository/">Thanks Emanuelis!</a></p>
+<blockquote><p>Add VMware GPG keys:</p>
+<pre>rpm --import http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-DSA-KEY.pub
+rpm --import http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub</pre>
+<p>Edit <em>/etc/yum.repos.d/vmware-tools.repo</em>:</p>
+<pre>[vmware-tools]
+name=VMware Tools
+baseurl=http://packages.vmware.com/tools/esx/4.1latest/rhel6/$basearch
+enabled=1
+gpgcheck=1</pre>
+<p>Install VMware Tools:</p>
+<pre>yum install vmware-open-vm-tools-nox</pre>
+</blockquote>
+<p>&nbsp;</p>

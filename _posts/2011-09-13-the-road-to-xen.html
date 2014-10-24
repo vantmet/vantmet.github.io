@@ -1,0 +1,23 @@
+---
+layout: post
+title: The Road to Xen
+date: 2011-09-13 12:48:51.000000000 -07:00
+categories:
+- Hyper-V
+- VMware
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _wpas_done_twitter: '1'
+  _edit_last: '13308234'
+author: 
+---
+<p>Due to some not great clicking, and a ridiculously slow Internet connection in the office. I am left with one one way to get XenApp running, and not a lot of time. I have a .vhd, but no Hyper-V machine to test on... Time for some nesting.</p>
+<p>Starting with William Lam's instructions on <a title="How to Enable Support for Nested 64bit &amp; Hyper-V VMs in vSphere 5" href="http://www.virtuallyghetto.com/2011/07/how-to-enable-support-for-nested-64bit.html" target="_blank">virtuallyGhetto</a> I spun up a Windows Server 2008R2 VM, installed and swapped over to the ESXi5.0 virtual hardware. Once I'd gotten past forgetting to make the Host config change:</p>
+<blockquote><p>echo "<em>vhv.allow = \"TRUE\"</em>" &gt;&gt; /etc/vmware/config</p></blockquote>
+<p>I had a booting windows box and a happy feeling. I installed the Hyper-V role, and rebooted. Then I realized I didn't have any NICs and the fun started. Lots of black screens later I realized that if I boot the VM with NICs added, but not "Connected" everything is fine, and once I get the proper video feed from Windows, I can connect the BICs, and Hyper-V is happy. If I leave the NICs connected at boot though, I get a black screen. Very, very odd.</p>
+<p>So, spwan a VM, attach the VHD, boot, and we have a XenApp virtual machine. Add it to DNS, and then....Hmmm... Getting a random error.</p>
+<p>Perhaps I'll be back later...</p>
+<p><a href="http://vantmet.files.wordpress.com/2011/09/nesting.png"><img class="size-medium wp-image-45" title="Nesting" src="{{ site.baseurl }}/assets/nesting.png" alt="Nesting" width="300" height="226" /></a></p>

@@ -1,0 +1,33 @@
+---
+layout: post
+title: Why I love Virtualisation...
+date: 2011-02-18 13:46:34.000000000 -08:00
+categories:
+- Linux
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+  _wpas_done_twitter: '1'
+author: 
+---
+<p>I love VMware products in general, and ESX in particular, I just  solved a problem in under 30 minutes, without any service interruption,  that on the same physical box would have required a reboot... Amazing  you say? Well yes, when your /var partition is dying on your mail  gateway, it is!<img title="More..." src="assets/trans.gif" alt="" /></p>
+<p>So our /var was getting full, and has been on and off for a while, it  needs to be bigger, about double it's current 4GB. What to do? Well  fire up the VI Client (yes, we are still running ESX3.5i), and add a  10GB disk to the VM.</p>
+<p>Now, this is linux, the drive doesn't automatically show up, wo what to do next? Well a <a href="http://www.riccardoriva.com/archives/356" target="_blank">quick Google </a>said:</p>
+<blockquote><p>echo "- - -" &gt; /sys/class/scsi_host/host0/scan</p></blockquote>
+<p>Sure enough, an ls of /dev now shows an sdb that wasn't there before!</p>
+<p>So, we add it into lvm:</p>
+<blockquote><p>pvcreate /dev/sdb<br />
+vgextend vg /dev/sdb</p></blockquote>
+<p>That gets us lots more space available, but I don't really want /var  split over two disks, so we will dedicate this pv to /var, and leave  some free space on the old pv...</p>
+<blockquote><p>pvmove -n var /dev/sda4 /dev/sdb</p></blockquote>
+<p>That does the trick, /var is now on the new pv. But still only  4GB...I've never managed to make the lvextend command automatically use  all of the available free space, so I looked at how many extents were  free in pvdisplay -m and then used that figure to do the extension.</p>
+<blockquote><p>lvextend -l+1535 /dev/vg/var</p></blockquote>
+<p>Ok, so the partition is now 10GB, but the file system (etx3) is only 4GB..</p>
+<blockquote><p>resize2fs /dev/vg/var</p></blockquote>
+<p>And there we go, all done!</p>
+<p>Edit: Apparently the rescan above only picks up new disks. It won't notice a change on old disks, so if you increase a LUN, and want Linux to pick up the change you need to do</p>
+<blockquote><p>echo 1 &gt; /sys/bus/scsi/devices/3:0:7:1/rescan</p></blockquote>
+<p>Where the 3:0:7:1 is the device ID.</p>

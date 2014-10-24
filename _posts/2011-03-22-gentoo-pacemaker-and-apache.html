@@ -1,0 +1,22 @@
+---
+layout: post
+title: Gentoo, Pacemaker, and Apache
+date: 2011-03-22 15:42:59.000000000 -07:00
+categories:
+- Linux
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+  _wpas_skip_twitter: '1'
+author: 
+---
+<p>I've been playing around with creating HA Load Balancing Proxy servers with Apache on top of Pacemaker today.</p>
+<p>Since Gentoo does it's configuration a little differently than most distributions, this hit a hurdle.</p>
+<p>Gentoo puts some Apache command line options in a file /etc/conf.d/apache2 these decide the vohosts that start and other "-D" values. Without these apache will fail to start.</p>
+<p>As Pacemaker doesn't know about this file, or these values, apache was failing to spawn, and I was getting an error.</p>
+<p>Simply copying the -D values, into the HTTPOPTS variable in the /usr/lib/ocf/resource.d/heartbeat/apache file fixed the problem:</p>
+<blockquote><p>HTTPDOPTS="-D DEFAULT_VHOST -D INFO -D SSL -D SSL_DEFAULT_VHOST -D LANGUAGE -D STATUS -D PROXY"</p></blockquote>
+<p>Now I have two load balancers, running in an active/passive configuration...</p>

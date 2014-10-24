@@ -1,0 +1,35 @@
+---
+layout: post
+title: Queued Exchange Mailbox Moves
+date: 2013-07-02 09:17:01.000000000 -07:00
+categories:
+- Exchange
+tags:
+- '2010'
+- Exchange
+- moverequest
+- multitenant
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+  publicize_reach: a:2:{s:7:"twitter";a:1:{i:368626;i:192;}s:2:"wp";a:1:{i:0;i:1;}}
+  _wpas_done_368625: '1'
+  publicize_twitter_user: vAntMet
+  _wpas_done_368626: '1'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:84584618;b:1;}}
+author: 
+---
+
+<p>This morning I had a list of Exchange 2010 move requests that were sat in a queued state. None in progress, but a few complete. So what was holding them up?</p>
+<p>First I tried suspending/resuming them:</p>
+<blockquote><p>Get-MoveRequest -multitenant | suspend-moverequest -Confirm:$false</p>
+<p>Get-MoveRequest -multitenant | resume-moverequest</p></blockquote>
+<p>That didn't help.</p>
+<p>Next I tried removing and re-creating the requests:</p>
+<blockquote><p>[PS] C:\scripts&gt;Get-MoveRequest -MultiTenant | Get-MoveRequestStatistics | select displayname,exchangeguid,targetdatabase | export-csv moves.csv</p>
+<p>[PS] C:\scripts&gt;Get-MoveRequest -MultiTenant | Remove-MoveRequest -Confirm:$false</p>
+<p>[PS] C:\scripts&gt;Import-Csv .\moves.csv |foreach-object {new-moverequest -confirm:$false -Identity $_.Exchangeguid -targetdatabase $_.Targetdatabase}</p></blockquote>
+<p>But still no dice. The next thing I noticed though was that the moves were all targeted at databases on the same server, so I went hunting services on that machine. It turns out that the <strong>"Microsoft Exchange Replication</strong>" service was stopped. Kicked that into action, and bingo, 4 moves went to "In Progress"</p>
+<p>&nbsp;</p>

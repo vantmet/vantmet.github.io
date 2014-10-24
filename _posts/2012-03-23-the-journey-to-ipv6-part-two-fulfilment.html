@@ -1,0 +1,20 @@
+---
+layout: post
+title: The Journey to IPv6 – Part Two – Fulfilment
+date: 2012-03-23 22:46:38.000000000 -07:00
+categories:
+- IPv6
+tags: []
+status: draft
+type: post
+published: false
+meta:
+  _edit_last: '13308234'
+author: 
+---
+<p><a title="The Journey to IPv6 – Part One – The Request" href="http://vantmet.wordpress.com/2011/03/09/the-journey-to-ipv6-part-one-the-request/">To start at the beginning, you can see Part 1 Here.</a></p>
+<p>With a little patience, and a little prodding, I have my /56. It's in place and routable.</p>
+<p>More specifically it's XXXX:XXXX:XXXX:0400::/56 (what, I'm not about to give you the whole thing, go look it up!)</p>
+<p><a title="IPv6_Addressing_Plans - See point 8" href="http://www.getipv6.info/index.php/IPv6_Addressing_Plans" target="_blank">Best Paractice</a> is to assign a /64 to each VLAN. That keeps things nice and simple. Our /56 gives us ...:0400:... to ...:04ff:... or 256 /64 subnets. 256 vlans should be enough for anyone ;). Definitely enough to test with.</p>
+<p>Since we are testing at the moment, but will probably go live with the same subnets later, start at the top of the range for testing i.e 04ff, then 04fe etc. Once moving to live subnets, we can use the low end of the scale.</p>
+<p>So, that's the plan. Routers will all be at ::1</p>

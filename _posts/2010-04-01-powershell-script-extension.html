@@ -1,0 +1,142 @@
+---
+layout: post
+title: Powershell Script Extension....
+date: 2010-04-01 15:58:45.000000000 -07:00
+categories:
+- PowerShell
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+author: 
+---
+<p>LucD posted a <a title="LucD" href="http://lucd.info/wp-trackback.php?p=1984" target="_blank">Powershell  Script</a> yesterday, to give a UML diagram of the disks attached to a  VM.</p>
+<p>That's nice, but the VM in question was hard-coded, as file name of  the diagram created.Not great if you want the diagram for a bunch of  vms. So, I swapped out the definition of $vmName and tweeked the  definition of the default for $diagramFileName. Giving a script that can  be run in a loop over all VMs, leaving you with .jpgs (or pdfs) in the  root of C:\</p>
+<blockquote><p>param($vmName)<br />
+$output = "C:\" + $vmName + ".jpg"</p>
+<p>function Get-UMLDiagram{</p>
+<p>function Set-ULMFromTo{<br />
+param($from, $to, $attrib)</p>
+<p>$result = "[" + $from + "]-&gt;[" + $to<br />
+if($attrib){<br />
+$result += "|"<br />
+$attrib | %{<br />
+$result += ([string]$_ + ";")<br />
+}<br />
+$result = $result.TrimEnd(";")<br />
+}<br />
+$result += "],`n"<br />
+$result<br />
+}</p>
+<p>filter Get-SnapHash{<br />
+param($parent)</p>
+<p>$snapHash[$_.Snapshot.Value] = @($_.Name,$parent)<br />
+if($_.ChildSnapshotList){<br />
+$newparent = $_<br />
+$_.ChildSnapShotList | Get-SnapHash $newparent<br />
+}<br />
+}</p>
+<p>$vms = Get-View -ViewType VirtualMachine -Filter @{"Name"=$vmName}</p>
+<p>$snapHash = @{}</p>
+<p>$vms | %{<br />
+$ulmStr = ""<br />
+$vm = $_</p>
+<p>if($vm.Snapshot){<br />
+$vm.Snapshot.RootSnapshotList | Get-SnapHash $vm<br />
+}<br />
+$firstHD = $true<br />
+$_.Config.Hardware.Device | where {$_.DeviceInfo.Label -like "Hard disk  *"} | %{<br />
+$hd = $_<br />
+$hdNr = $hd.DeviceInfo.Label.Split(" ")[-1]<br />
+$exDisk = $vm.LayoutEx.Disk | where {$_.Key -eq $hd.Key}<br />
+$diskFiles = @()<br />
+$exDisk.Chain | %{$_.FileKey} | %{$diskFiles += $_}<br />
+$totalDiskAllocated = 0<br />
+$vm.LayoutEx.File | where {$diskFiles -contains $_.Key} | %{<br />
+$totalDiskAllocated += $_.Size<br />
+}<br />
+$hdProp = @()<br />
+if($hd.Backing.ThinProvisioned){<br />
+$hdProp += "Thin"<br />
+$hdProp += ("AllocatedGB=" + ("{0:N0} GB" -f ($totalDiskAllocated /  1GB)))<br />
+$hdProp += ("Used=" + ("{0:P0}" -f ($totalDiskAllocated / 1KB  /$hd.CapacityInKB)))<br />
+}<br />
+elseif($hd.Backing.GetType().Name.Contains("RawDisk")){<br />
+$hdProp += "RDM"<br />
+}<br />
+else{<br />
+$hdProp += "Thick"<br />
+$hdProp += ("Allocated=" + ("{0:N0} GB" -f ($totalDiskAllocated / 1GB)))<br />
+}<br />
+$ulmStr += (Set-ULMFromTo ($vm.Name + "{bg:orange}")   ($hd.DeviceInfo.Label) $hdProp)</p>
+<p>$exDisk.Chain[0].FileKey | %{<br />
+$ulmStr += (Set-ULMFromTo ($hd.DeviceInfo.Label + "{bg:green}")  $vm.LayoutEx.File[$_].Name.Split("/")[-1] $vm.LayoutEx.File[$_].Size)<br />
+}<br />
+$snapHash.GetEnumerator() | %{<br />
+$key = $_.Key<br />
+$value = $_.Value<br />
+$vm.LayoutEx.Snapshot | where {$_.Key.Value -eq $key} | %{<br />
+$vmsnId = $_.DataKey<br />
+$_.Disk | where{$_.Key -eq $hd.Key} | %{<br />
+if($diskFiles -notcontains $_.Chain[-1].FileKey[0] -and $diskFiles  -notcontains $_.Chain[-1].FileKey[1]){<br />
+$chain = $_.Chain[-1]<br />
+}<br />
+else{<br />
+$preSnapFiles = $_.Chain | %{$_.FileKey} | %{$_}<br />
+$vm.layoutEx.Disk | where {$_.Key -eq $hd.Key} | %{<br />
+foreach($chain in $_.Chain){<br />
+if($preSnapFiles -notcontains $chain.FileKey[0] -and $preSnapFiles  -notcontains $chain.FileKey[1]){<br />
+break<br />
+}<br />
+}<br />
+}<br />
+}<br />
+if($firstHD){<br />
+$ulmStr += (Set-ULMFromTo ($value[1].Name + "{bg:yellow}") ($value[0] +  "{bg:yellow}"))<br />
+$ulmStr += (Set-ULMFromTo $value[0]  $vm.LayoutEx.File[$vmsnId].Name.Split("/")[-1]  $vm.LayoutEx.File[$vmsnId].Size)<br />
+}<br />
+$ulmStr += (Set-ULMFromTo $value[0] ($value[0] + "-HD" + $hdNr +  "{bg:blue}"))<br />
+$chain.FileKey | %{<br />
+$ulmStr += (Set-ULMFromTo ($value[0] + "-HD" + $hdNr)  $vm.LayoutEx.File[$_].Name.Split("/")[-1] $vm.LayoutEx.File[$_].Size)<br />
+}<br />
+}<br />
+}<br />
+}<br />
+$firstHD = $false<br />
+}<br />
+$ulmStr.TrimEnd(",`n")<br />
+}<br />
+}</p>
+<p># Based on Doug Finke's original Get-yUMLDiagram function.<br />
+# See:  http://dougfinke.com/blog/index.php/2009/05/06/use-powershell-and-yuml-to-create-diagrams/<br />
+# Added the "scruffy" switch and rearranged some of the lines<br />
+#<br />
+function Get-yUMLDiagram {<br />
+param(<br />
+$yUML,<br />
+$diagramFileName = $output,<br />
+[switch]$show,<br />
+[switch]$pdf,<br />
+[switch]$scruffy<br />
+)</p>
+<p>$scruffyPath = ""<br />
+if($scruffy){<br />
+$scruffyPath = "scruffy/"<br />
+}<br />
+$base = "http://yuml.me/diagram/" + $scruffyPath + "class/"<br />
+$address = $base + $yUML</p>
+<p>$wc = New-Object Net.WebClient<br />
+if($pdf){<br />
+$diagramFileName =  $diagramFileName.Replace($diagramFileName.Split(".")[-1],"pdf")<br />
+$address += ".pdf"<br />
+}<br />
+$wc.DownloadFile($address, $diagramFileName)<br />
+if($show) {<br />
+Invoke-Item $diagramFileName<br />
+}<br />
+}</p>
+<p>$diagram = Get-UMLDiagram $vmName</p>
+<p>Get-yUMLDiagram $diagram $output</p></blockquote>
+<p>Thanks Luc!</p>

@@ -1,0 +1,26 @@
+---
+layout: post
+title: Gentoo, WGET, and IPv6
+date: 2011-02-15 21:37:40.000000000 -08:00
+categories:
+- Linux
+tags:
+- Gentoo
+- IPv6
+- linux
+- Networking
+- wget
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+author: 
+---
+<p>Well, I may as well make use of my IPv6 Tunnel, but how to get Gentoo to prefer IPv6 where it exists?</p>
+<p>My /etc/make.conf has lines for wget, but apparently they are out of date and have invalid escaping, leading to an error:</p>
+<p>    ValueError: No escaped character</p>
+<p>Looking at a newer make.conf.example (hidden away in /usr/share/portage/config/make.conf.example) I see that the way file paths are written has changed. Merging the command to prefer IPv6 and the new format gives:</p>
+<p>    FETCHCOMMAND="/usr/bin/wget --prefer-family=IPv6 -t 5 --passive-ftp  -O \"\${DISTDIR}/\${FILE}\" \"\${URI}\""<br />
+    RESUMECOMMAND="/usr/bin/wget -c --prefer-family=IPv6 -t 5 --passive-ftp  -O \"\${DISTDIR}/\${FILE}\" \"\${URI}\""</p>
+<p>Which works like a charm....</p>

@@ -1,0 +1,57 @@
+---
+layout: post
+title: CCNA - 1 - Purpose and Function
+date: 2012-03-27 20:13:52.000000000 -07:00
+categories:
+- CCNA
+tags:
+- CCNA
+- Cisco
+- cisco exams
+- Networking
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '13308234'
+  _wpas_done_linkedin: '1'
+  publicize_results: a:1:{s:7:"twitter";a:1:{i:84584618;a:2:{s:7:"user_id";s:7:"vAntMet";s:7:"post_id";s:18:"184735033628700672";}}}
+  _wpas_done_twitter: '1'
+author: 
+---
+<p><strong>Introduction</strong></p>
+<p>This is the first post in a series as I work through the CCNA syllabus. The introduction to the series can be found <a href="http://vantmet.wordpress.com/2012/03/23/so-today-i-failed-to-achive-a-ccna/">here</a>.</p>
+<p>I will be pretty much following the CCNA Composite Exam Blueprint point for point. One post per bullet point. I'm using Version 11 (640-802).</p>
+<p><strong>Purpose and Function</strong></p>
+<p>The bullet reads: <em>Describe the Purpose and Function of Various network devices</em></p>
+<p><em>Various</em> isn't too well defined, but at least for this purpose we know that we are dealing with devices found in a small office or branch office networks. So, what devices do we have?</p>
+<p>First we have the networking devices:<br />
+* Hubs<br />
+* Switches<br />
+* Routers<br />
+* Access Points<br />
+* Hardware firewall devices</p>
+<p>These are the devices that make up the network itself.</p>
+<p>Client Devices:<br />
+* Desktop and laptop computers<br />
+* Tablets<br />
+* Smart Phones</p>
+<p>These are the devices that the network exists for, the devices that access the network and utilise it.</p>
+<p>Finally we have service devices:<br />
+* Printers<br />
+* Servers<br />
+* Storage units</p>
+<p>These are the focus of the network, the devices the users are trying to access.</p>
+<p>These are very arbitrary groups, and I have picked them because that is how I think of them. Printers for example work very much more like a client in reverse, receiving data rather than requesting or sending it. In a SAN, servers act as client devices for the storage.</p>
+<p>Broadly speaking though, the client devices connect either using wired, or wireless (more on both later) connections to the network devices. The network devices provide a transport system, usually with security in mind, for the clients to the server devices such that the clients can make a request, and the server devices can fulfil the request.</p>
+<p>A small example of this? Why not. A user sat at a computer would like to be sure the computer has the correct time. The computer is connected to a switch, which is connected to a server which is running NTPd. The user sends a request, picked up by the switch and forwarded to the server. The server sends back the correct time, using the reverse route.</p>
+<p>Now, lets take those network devices in a little more detail.</p>
+<p>First we have the hub. Don't see many of these, and I've never seen one in production use! A good place to start then. A hub is basically a repeater, like a parrot, everything it hears, it repeats. Any data in to any port is immediately sent out of all other ports. This means that each port on a hub is within the same segment, and collisions are more and more likely with more ports.</p>
+<p>Hub, 1 segment, 1 collision domain.</p>
+<p>Next the switch. A switch starts off like a hub, but for every request it receives, it remembers the MAC address of the requester, and the port the request came in on. That way, once a request destined for that MAC is seen, it only needs to be sent out of one port, not many.</p>
+<p>Switch, 1 segment, many collision domains.</p>
+<p>Routers work at the level above switches, effectively moving packets based on IP address, rather than MAC address. This makes each port on a router a separate segment, and by virtue of that a separate collision domain.</p>
+<p>Router, many segments, many collision domains.</p>
+<p>Access points are effectively hubs for wireless devices. Using the shared medium of the same "channel" of the spectrum each client device shares the bandwidth of the access point.</p>
+<p>AP 1 segment, 1 collision domain.</p>
+<p>I've rambled a bit there, and I haven't touched on how full duplex cabling effects the collision domain with modern switches, or fun things like VTP and how to avoid switching loops.Fortunately, they come later in the blueprint.</p>
