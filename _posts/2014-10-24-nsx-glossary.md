@@ -14,7 +14,7 @@ This is a list of terms I've come accross so far in reading up on VMware NSX.
 
 | Term | Meaning | Description |
 |------|---------|---|
-| BUM	| Broadcast, Unicast, Multicast	
+| BUM	| Broadcast, Unknown unicast, Multicast	| All traffic that isn't to a known unicast address |
 | DFW	| Distributed Logical Firewall	| Firewall function at the Host Kenel Level (East West Traffic) |
 | DLR	| Distributed Logical Router	| Routing Function at the Host Kernel Level |
 | ECMP	| Equal Cost Multipathing	| Using many active routes to load balance at layer 3 |
