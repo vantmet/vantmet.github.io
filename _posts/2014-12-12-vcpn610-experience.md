@@ -10,13 +10,13 @@ meta:
 author: Anthony Metcalf
 ---
 
-This morninging I took the VCPN610 Exam according to plan. What didn't go according to plan was getting a score of 290 when I needed 300 to pass. So near, and yet so very very far.
+This morning I took the VCPN610 Exam according to plan. What didn't go according to plan was getting a score of 290 when I needed 300 to pass. So near, and yet so very very far.
 
 This one was quite an expensive learning experience for me, so I need to make the most of it and learn what I can.
 
 *Lesson the First*: VCP Exams are _hard_. I've done Cisco CCNA exams, and MS MCSA/MCSE Exams. I'd put this exam at well above the level of the MCSA, probably a bit above the CCNA, and probably along side MCSE. The exam goes quite deep, and broader than I expected.
 
-*Lesson the Second*: Time is quite tight. I'm used to getting out of exams _well_ before the end fo the time, 30-50% of the allocated time isn't unusual, even on the harder exams. I'm blessed that English is my first language, and that I've sat enough exams through school and uni to just get on with it. This exam took 75% of my time. I had the option to review questions (I wasn't sure if I would have), but I didn't have enough time to review them all properly, I'd have barely managed to re-read all the questions. Which leads to:
+*Lesson the Second*: Time is quite tight. I'm used to getting out of exams _well_ before the end of the time, 30-50% of the allocated time isn't unusual, even on the harder exams. I'm blessed that English is my first language, and that I've sat enough exams through school and uni to just get on with it. This exam took 75% of my time. I had the option to review questions (I wasn't sure if I would have), but I didn't have enough time to review them all properly, I'd have barely managed to re-read all the questions. Which leads to:
 
 *Lesson the Third*: Note questions you are unsure of next time! There is the ability to review a question at a time, and you can jump about. Use it! Many questions you just *know* many could you some thought. Mark and Return.
 
