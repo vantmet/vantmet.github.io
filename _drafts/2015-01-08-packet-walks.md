@@ -23,3 +23,7 @@ The two VMs boot. The have a mac address, and an IP address preconfigured. Just 
 
 This is about the simplest conversation that can happen over a switched Ethernet network.
 
+Now let's step it up a gear.
+
+<div style="text-align:center" markdown="1">![Basic NSX Network]({{ site.url }}/assets/basic_nsx_layout.png)</div>
+
