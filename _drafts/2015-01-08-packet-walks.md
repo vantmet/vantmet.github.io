@@ -25,5 +25,5 @@ This is about the simplest conversation that can happen over a switched Ethernet
 
 Now let's step it up a gear.
 
-<div style="text-align:center" markdown="1">![Basic NSX Network]({{ site.url }}/assets/basic_nsx_layout.png)</div>
+![Basic NSX Network]({{ site.url }}/assets/basic_nsx_layout.png)
 
