@@ -8,7 +8,7 @@ I was once asked an interview question that seemed very basic to me, and probabl
 
 I'm going to start in this blog post, with that question, but in a virtual environment. Then I'm going to extrapolate to a couple of NSX situations that I find quite interesting.
 
-<div style="text-align:center" markdown="1"><iframe src="https://cacoo.com/diagrams/ow9dMAiZn6cBUMJ5/view" width="402" height="330" frameborder="0" scrolling="no"></iframe></div>
+![Basic Network]({{ site.url }}/assets/basic_layout.png)
 
 The above diagram shows two VMs on the same VLAN. The vSwitches can be standard or distributed, and the physical switches could be anything from a desktop unmanaged switch through to a Nexus. For our purposes, that doesn't matter.
 
