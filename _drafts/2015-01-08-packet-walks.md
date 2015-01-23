@@ -27,3 +27,15 @@ Now let's step it up a gear.
 
 ![Basic NSX Network]({{ site.url }}/assets/basic_nsx_layout.png)
 
+Here we have a very simple, NSX based network. I am assuming one transport zone, set to "unicast mode", with one logical network (say VXLAN 5001) which both VMs are attached to.
+
+One of the key differences between Unicast Mode and the other modes is that, in unicast mode, the host relays the IP information for the VM to the controllers which then relay that information to the vDistributed Switches that make up the Logical Switch. This means that when the Arp is generated at 1. The host already knows the IP/MAC combination of VM2. The full flow goes like:
+
+1. VM1 sends an ARP packet to FF:FF:FF:FF:FF:FF. This is passed to the local dvSwitch and into the VTEP.
+2. The VTEP encapsulates the ARP into a VXLAN packet with the destination mac address being the VTEP mac address of the host VM2 is running on, and the source address being it's own TEP MAC address. This packet is pushed out to the physical switch.
+3. In normal cercumstances the phsyical switches will have the VTEP MAC addresses through communication with the controller, but if not, this is identical to the first scenario, except the VTEP MAC addreses are used, not the VM addresses.
+4. The second physical switch acts again just like it did last time.
+5. The VTEP decapsulates the packet, and passes the origional ARP into the dvSwitch.
+6. Packet is delivered to the VMs on that VLAN on that host, and VM2 responds.
+
+In both secanrios our VMs have both sent and recieved the same information. Notice how the MAC address of the VMs is never seen by the switches though in our second case. This means we've just reduced the fib on the switches by a couple of orders of magnitude.
