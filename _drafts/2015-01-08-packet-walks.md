@@ -4,7 +4,7 @@ title: NSX Packet Walks
 categories: vmware nsx
 ---
 
-I was once asked an interview question that seemed very basic to me, and probably will to anyone with any sort of Network experience, but that I'm told many people don't even think about. It was a simple question: How does a switch pass packets.
+I was once asked an interview question that seemed very basic to me, and probably will to anyone with any sort of Network experience, but that most people don't even think about. It was a simple question: How does a switch pass packets.
 
 I'm going to start in this blog post, with that question, but in a virtual environment. Then I'm going to extrapolate to a couple of NSX situations that I find quite interesting.
 
