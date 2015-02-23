@@ -1,15 +1,15 @@
 ---
 layout: post
-title: NSX Packet Walks
+title: NSX Packet Walks Continued
 categories: vmware nsx
-status: published
+status: draft
 ---
 
-I was once asked an interview question that seemed very basic to me, and probably will to anyone with any sort of Network experience, but that most people don't even think about. It was a simple question: How does a switch pass packets.
+This post is a continuation of the last post where I discussed a very simple virtual network, and a very simple VXLAN environment. In this post I'm going to step it up a gear and introduce a virtual distributed router to the mix. This is a key part of NSX and the ability to create virtual networks on the fly without waiting for provisioning externally. It also makes for an interesting thought process when the "router" is distributed accross all hosts.
 
-I'm going to start in this blog post, with that question, but in a virtual environment. Then I'm going to extrapolate to a couple of NSX situations that I find quite interesting.
+Again we will start with a very basic network, to get some concepts out of the way, then we will move to the NSX version.
 
-![Basic Network]({{ site.url }}/assets/basic_layout.png)
+![Basic Network]({{ site.url }}/assets/basic_routed_layout.png)
 
 The above diagram shows two VMs on the same VLAN. The vSwitches can be standard or distributed, and the physical switches could be anything from a desktop unmanaged switch through to a Nexus. For our purposes, that doesn't matter.
 
@@ -26,17 +26,17 @@ This is about the simplest conversation that can happen over a switched Ethernet
 
 Now let's step it up a gear.
 
-![Basic NSX Network]({{ site.url }}/assets/basic_nsx_layout.png)
+![Basic NSX Network]({{ site.url }}/assets/basic_routed_nsx_layout.png)
 
 Here we have a very simple, NSX based network. I am assuming one transport zone, set to "unicast mode", with one logical network (say VXLAN 5001) which both VMs are attached to.
 
-One of the key differences between Unicast Mode and the other modes is that, in unicast mode, the host relays the IP information for the VM to the controllers which then relay that information to the vDistributed Switches that make up the Logical Switch. This means that when the ARP is generated at 1. The host already knows the IP/MAC combination of VM2. The full flow goes like:
+One of the key differences between Unicast Mode and the other modes is that, in unicast mode, the host relays the IP information for the VM to the controllers which then relay that information to the vDistributed Switches that make up the Logical Switch. This means that when the Arp is generated at 1. The host already knows the IP/MAC combination of VM2. The full flow goes like:
 
 1. VM1 sends an ARP packet to FF:FF:FF:FF:FF:FF. This is passed to the local dvSwitch and into the VTEP.
 2. The VTEP encapsulates the ARP into a VXLAN packet with the destination mac address being the VTEP mac address of the host VM2 is running on, and the source address being it's own TEP MAC address. This packet is pushed out to the physical switch.
-3. In normal circumstances the physical switches will have the VTEP MAC addresses through communication with the controller, but if not, this is identical to the first scenario, except the VTEP MAC addresses are used, not the VM addresses.
+3. In normal cercumstances the phsyical switches will have the VTEP MAC addresses through communication with the controller, but if not, this is identical to the first scenario, except the VTEP MAC addreses are used, not the VM addresses.
 4. The second physical switch acts again just like it did last time.
-5. The VTEP de-encapsulates the packet, and passes the original ARP into the dvSwitch.
+5. The VTEP decapsulates the packet, and passes the origional ARP into the dvSwitch.
 6. Packet is delivered to the VMs on that VLAN on that host, and VM2 responds.
 
-In both scenarios our VMs have both sent and received the same information. Notice how the MAC address of the VMs is never seen by the switches though in our second case. This means we've just reduced the fib on the switches by a couple of orders of magnitude.
+In both secanrios our VMs have both sent and recieved the same information. Notice how the MAC address of the VMs is never seen by the switches though in our second case. This means we've just reduced the fib on the switches by a couple of orders of magnitude.
