@@ -32,17 +32,18 @@ This is about the simplest conversation that can happen over a routed Ethernet n
 
 Now let's step it up a gear.
 
-![Basic NSX Network]({{ site.url }}/assets/basic_routed_nsx_layout.png)
+![Routed NSX Network]({{ site.url }}/assets/vdr_nsx_layout.png)
 
-Here we have a very simple, NSX based network. I am assuming one transport zone, set to "unicast mode", with one logical network (say VXLAN 5001) which both VMs are attached to.
+Here we have a very simple, routed NSX network. I am assuming one transport zone, set to "unicast mode", with two logical networks (say VXLAN 5001 in orange and VXLAN 5002 in Green), VM1 is conencted to 5001 and VM2 to 5002.
 
-One of the key differences between Unicast Mode and the other modes is that, in unicast mode, the host relays the IP information for the VM to the controllers which then relay that information to the vDistributed Switches that make up the Logical Switch. This means that when the Arp is generated at 1. The host already knows the IP/MAC combination of VM2. The full flow goes like:
+When a cluster is prepared for NSX, there are three initial modules that are added into the kernel of each ESXi host. The first of these, we have seen is the tunnel end point, the VTEP. The second is the Virtual Distributed Router (VDR) and the third is the Virtual Distributed Firewall (VDF). We wont worry much about the firewall modle in this series.
 
-1. VM1 sends an ARP packet to FF:FF:FF:FF:FF:FF. This is passed to the local dvSwitch and into the VTEP.
-2. The VTEP encapsulates the ARP into a VXLAN packet with the destination mac address being the VTEP mac address of the host VM2 is running on, and the source address being it's own TEP MAC address. This packet is pushed out to the physical switch.
-3. In normal circumstances the physical switches will have the VTEP MAC addresses through communication with the controller, but if not, this is identical to the first scenario, except the VTEP MAC addresses are used, not the VM addresses.
-4. The second physical switch acts again just like it did last time.
-5. The VTEP deencapsulates the packet, and passes the original ARP into the dvSwitch.
-6. Packet is delivered to the VMs on that VLAN on that host, and VM2 responds.
+The VDR gives us a great boost, because we no longer need to funnel all inter-vlan traffic up to a central rouing point (usually a TOP of Rack switch, or core router). We can do that routing within the hypervisor of the hosts. This means that so called East-West, or server to server traffic can have much shorter and more direct routes, reducing latency, and bandwidth utilisation. This also removes us from requiring VLANs creating on physical switches for every virtual network, and the work involved in adding them to rouing tables. We can dynamically create networks and add them to the VDR without any need to touch the physical switches or routers.
 
-In both scenarios our VMs have both sent and received the same information. Notice how the MAC address of the VMs is never seen by the switches though in our second case. This means we've just reduced the fib on the switches by a couple of orders of magnitude.
+Although the diagram appears to have two routers, both connected to our two virtual networks, they actually form one single logical router. Any chnages to configuration, or CAM/FIB tables are re-distributed by the network controllers to all other instances. We can consider the VDR as a single router with, in this case, two Logical Interfaces (LIFs). Each LIF has a MAC address. Thought about like this, the logical setup is actually even simpler than network we looked at above.
+
+![Logical Routed NSX Network]({{ site.url }}/assets/vdr_logical.png)
+
+Looked at from this point of view, VM1 will send the packet addressed to the MAC address of the router's LIF on VXLAN5001, and the IP address of VM2. The logical router will take that packet and push it out of the interface on VXLAN5002, this time definitly as a uni-cast packet, as the logical router will have been informed of VM2's IP and MAC addresses. VM2 will recieve the packet, and the reply will be int he reverse direction.
+
+In reality, the packet is passed by the logical switch to the VDR on host 1. The routing process is done, and the packet is placed on VXLAN5002, and passed to the VTEP. The packet is then passed to host 2, where the VTEP passes the packet up to the logical switch and then to VM2. The return packet, begins it's life on VXLAN5002, and is passed to the logical router on host 2, where it is re-transmitted onto VXLAN5001 and passed to the VTEP on host 2, etc etc. The Logical Router Instance used is always the closest to the VM that creates the packet. This seems to me to be the only logical way the process can work with the logical router having one MAC address per LIF. To work any other way, it would need 1 MAC adress per host, per LIF, and it would get very much more complex, very quickly.
