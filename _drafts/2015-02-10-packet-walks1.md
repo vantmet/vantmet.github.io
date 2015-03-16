@@ -5,13 +5,19 @@ categories: vmware nsx
 status: draft
 ---
 
-This post is a continuation of the last post where I discussed a very simple virtual network, and a very simple VXLAN environment. In this post I'm going to step it up a gear and introduce a virtual distributed router to the mix. This is a key part of NSX and the ability to create virtual networks on the fly without waiting for provisioning externally. It also makes for an interesting thought process when the "router" is distributed accross all hosts.
+This post is a continuation of the [last post]({% post_url 2015-02-10-packet-walks %}) where I discussed a very simple virtual network, and a very simple VXLAN environment. If you haven't already, you will want to read that post first.  In this post I'm going to step it up a gear and introduce a virtual distributed router to the mix. This is a key part of NSX and the ability to create virtual networks on the fly without waiting for provisioning externally. It also makes for an interesting thought process when the "router" is distributed accross all hosts.
 
 Again we will start with a very basic network, to get some concepts out of the way, then we will move to the NSX version.
 
 ![Basic Network]({{ site.url }}/assets/basic_routed_layout.png)
 
-The above diagram shows two VMs on the same VLAN. The vSwitches can be standard or distributed, and the physical switches could be anything from a desktop unmanaged switch through to a Nexus. For our purposes, that doesn't matter.
+The above diagram shows two VMs this time on different VLANs seperated by a router. Now is probably a good time to make a small diversion to talk about where the decision about what device to send a packet too is made. This doesn't matter to the vast majority of cases, as with just a single NIC the outcome of the decision process is the same. But as sooin as you get devices with multiple routes, this starts to get interesting. Last time we discussed devices on the same VLAN, the same subnet, the same broadcast domain. These three terms are often used interchangably, and are indeed usually kept the same to make life easier. This meant that the OS withing the VM, when sending a packet to VM2 knew to send an arp to discover that VMs MAC address to use for all further communication. That decision tree though started a good ways before that.
+
+When the OS gets the message from the Application that a packet needs to be sent to another device it first looks at the IP address of the destination machine. It compares this to it's ARP table, a list of MAC addresses, and IP addresses, and Interfaces they have been seen on. If the IP address of the other machine exists in the ARP table, then the packet can be addressed to the correct MAC address and sent out of the correct interface. If there is no entry, then it must work it out. It then compares the IP to any and all known IP subnets connected to interfaces on the machine. If the IP address is in the same subnet as one (or more) of the interfaces, then it matches to the most restrictive subnet that contains the IP, and sends an ARP out of that interface.
+
+If the IP address doesn't fall into the subnet of any of the subnets on the machine, then it is sent to the Default Gateway MAC address instead. The Default Gatweay must always be in the subnet of one of the interfaces on the machine.
+
+So, now we can look at the diagram again. We can assume that each VM has "router" as it's Default Gateway.
 
 The two VMs boot. The have a mac address, and an IP address preconfigured. Just for fun we'll assume they each have the IP address of the other in their hosts file, so we don't have to involve DNS. VM1 wants to send a packet to VM2.
 
