@@ -1,6 +1,10 @@
 ---
 layout: post
 title: NSX Packet Walks - Replication Modes
+categories: vmware nsx
 ---
 
+This is the third post in the NSX Packet Walks series. You probably want to start at [the first post](http://vantmet.github.io/2015/02/10/packet-walks) or [the second post](http://vantmet.github.io/2015/03/24/packet-walks1).
+
+Up to now we have forcused on the traffic from one VM to another VM somewhere within the NSX system. I have skipped over the way traffic is distributed between hosts, and I haven't discussed the ways that traffic can leave the NSX system. The next three posts will cover these topics.
 
