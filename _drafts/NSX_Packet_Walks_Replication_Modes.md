@@ -49,3 +49,9 @@ This has the positive side that the underlying hardware capability is compleatly
 The major downside is that in the case of many segments, many packets may be sent from a single server rather than just one in the multicast mode. This can eat bandwidth in high density cases.
 
 ### Hybrid Replication Mode
+
+Hybrid is exactly what it says on the tin. Layer 2 multicast, IGMP is used within VXLAN segments to reduce the number of packets sent from a host. Unicast is used between segments in order to avoid the need for layer 3 multicats and PIMs.
+
+This is a good halfway house between the deep hardware reliance of pure multicast, and the performance issues of unicast. This probably scales the best of all of the systems, but has the downside of needing IGMP from managed switches within each cluster.
+
+With Hybrid mode, the "VTEP" that is called a "UTEP" in unicast is now called a "MTEP" (multicast tunnel endpoint) because it pushes out multicast packets.
