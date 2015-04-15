@@ -23,14 +23,23 @@ Of all of that, we are concerned with just one thing. Each rack will be on a dif
 There are three available VXLAN replication modes:
 
 1. Muticast
-2. Hybrid
-3. Unicast
+2. Unicast
+3. Hybrid
 
 Multicast has the most restrictive hardware requirements, but is the easiest conceptually to grasp. The earlier posts int he series assumed Unicast, which is only available on the vSphere implementation of NSX and is the most complex, but also the most flexible. The replication mode is set at the Transport Zone layer. It *can* be over-ridden at the Virtual Switch layer, but I can't see any reason why you would want to do this on a case by case basis. KISS!
 
 ### Multicast Replication Mode
 
-### Hybrid Replication Mode
+Muticast replication mode depends on the underlay switch configuration to support a full multicast implementation. The VTEP(s) on each host, join a multicast group on the physical switch for each Logical Switch that is created, so any BUM traffic can be directed to the multicast group, and is distributed to all VTEPs in the group. This has the advantage that BUM traffic is only distributed to hosts that participate in a given Logical Switch.
+
+The downsides are:
+
+1. Support for IGMP, PIM and layer 3 multicast routing are required at the hardware layer. This is a nortoriously complex area of network design and maintenance that many wish to avoid.
+2. The system is most deeply tied to the hardware layer.
+3. With many Logical Switches, you need many multicast groups which could become a limitation in a large environment.
 
 ### Unicast Replication Mode
 
+Unicast replication mode is the exact opposite of multicast mode. 
+
+### Hybrid Replication Mode
