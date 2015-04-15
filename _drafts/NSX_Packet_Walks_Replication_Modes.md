@@ -40,6 +40,12 @@ The downsides are:
 
 ### Unicast Replication Mode
 
-Unicast replication mode is the exact opposite of multicast mode. 
+Unicast replication mode is the exact opposite of multicast mode. With unicast mode, when a BUM frame is recieved by a VTEP, it send the frame directly to each other host in it's own VXLAN Segment. It then picks a host in each other VXLAN Segment that is designated the "UTEP" or "Unicast Tunnel End Point". When this host recieves the frame, it sends it to each other host in the segment.
+
+Again, the calculation of "each other host" and "each other segment" takes into account logical switch location, so if a logical switch is not active on a host, or segment, it will not recieve the frame.
+
+This has the positive side that the underlying hardware capability is compleatly ignored. It is a pure software solution that decouples us from the underlying hardware.
+
+The major downside is that in the case of many segments, many packets may be sent from a single server rather than just one in the multicast mode. This can eat bandwidth in high density cases.
 
 ### Hybrid Replication Mode
