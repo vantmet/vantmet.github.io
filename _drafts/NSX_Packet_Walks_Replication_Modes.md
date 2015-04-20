@@ -12,7 +12,7 @@ This post will focus on the different methodologies available in NSX for dealing
 
 ## VTEP Segments
 
-Before we get started though, it would be useful to discus VTEP Segments. Following the VMware best practice design guide, our VMware system will be split into multiple clusters, with Management and Edge clusters (sometimes consolidated) and probably multiple computer clusters. This makes for ease of management, and reduced failure domains. It is common to design in a 1 cluster per rack pattern, so that the rack unit becomes a module of capacity. Each rack is then created with unique IP information, so that addition (or removal) of a rack doesn't affect IP ranges, and so that equal cost multipathing (ECMP) can be used to form resilient connections to a Leaf-Spine network.
+Before we get started though, it would be useful to discus VTEP Segments. Following the VMware best practice design guide, our VMware system will be split into multiple clusters, with Management and Edge clusters (sometimes consolidated) and probably multiple compute clusters. This makes for ease of management, and reduced failure domains. It is common to design in a 1 cluster per rack pattern, so that the rack unit becomes a module of capacity. Each rack is then created with unique IP information, so that addition (or removal) of a rack doesn't affect IP ranges, and so that equal cost multipathing (ECMP) can be used to form resilient connections to a Leaf-Spine network.
 
 Of all of that, we are concerned with just one thing. Each rack will be on a different IP subnet. These subnets are referred to as VTEP Segments. The VTEP Segment a host is connected to, is the IP subnet of it's VXLAN interfaces.
 
@@ -26,7 +26,7 @@ There are three available VXLAN replication modes:
 2. Unicast
 3. Hybrid
 
-Multicast has the most restrictive hardware requirements, but is the easiest conceptually to grasp. The earlier posts int he series assumed Unicast, which is only available on the vSphere implementation of NSX and is the most complex, but also the most flexible. The replication mode is set at the Transport Zone layer. It *can* be over-ridden at the Virtual Switch layer, but I can't see any reason why you would want to do this on a case by case basis. KISS!
+Multicast has the most restrictive hardware requirements, but is the easiest conceptually to grasp. The earlier posts in the series assumed Unicast, which is only available on the vSphere implementation of NSX and is the most complex, but also the most flexible. The replication mode is set at the Transport Zone layer. It *can* be over-ridden at the Virtual Switch layer, but I can't see any reason why you would want to do this on a case by case basis. KISS!
 
 ### Multicast Replication Mode
 
@@ -40,7 +40,7 @@ The downsides are:
 
 ### Unicast Replication Mode
 
-Unicast replication mode is the exact opposite of Multicast mode. With unicast mode, when a BUM frame is received by a VTEP, it send the frame directly to each other host in it's own VXLAN Segment. It then picks a host in each other VXLAN Segment that is designated the "UTEP" or "Unicast Tunnel End Point". When this host receives the frame, it sends it to each other host in the segment.
+Unicast replication mode is the exact opposite of Multicast mode. With unicast mode, when a BUM frame is received by a VTEP, it sends the frame directly to each other host in it's own VXLAN Segment. It then picks a host in each other VXLAN Segment that is designated the "UTEP" or "Unicast Tunnel End Point". When this host receives the frame, it sends it to each other host in the segment.
 
 Again, the calculation of "each other host" and "each other segment" takes into account logical switch location, so if a logical switch is not active on a host, or segment, it will not receive the frame.
 
