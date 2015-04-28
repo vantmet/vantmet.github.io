@@ -36,8 +36,12 @@ Firstly the bridging s a 1:1 mapping. You cannot have 1 VLAN bridged onto two VX
 
 Secondly, as the Bridge instance is decided by the DLR Control VM, the bridge instance is tied to a specific host. This will usually mean there is a bottleneck for traffic at the bridge.
 
-Different bridge instances can be tied into different hosts, which improves this bottleneck a little, but also makes the configuration more complex. Default behavior is to place the Bridge instance on the host with the control VM as in the image, but it can be chosen during configuration, on a case by case basis for each bridge instance.
+Different bridge instances can be tied into different hosts, which improves this bottleneck a little, but also makes the configuration more complex. Default behaviour is to place the Bridge instance on the host with the control VM as in the image, but it can be chosen during configuration, on a case by case basis for each bridge instance.
 
 Although the Control VM decides which DLR instance performs the bridging, no data flows through the control VM. It is all handled by the VIB at the host.
 
+### Packet Walks
 
+Once bridging is in place it is easy to see that the DLR will know which BUM traffic needs to be sent over the bridge, due to having an IP address on the VLAN. From the bridge instance, the BUM traffic works exactly as in a traditional environment out to the physical box and back. So we still have the advantage that BUM traffic does not flood the network, and only moves to the Edge rack, to move out into the wider LAN.
+
+Next time we will discuss North-South traffic and tie up the series.
