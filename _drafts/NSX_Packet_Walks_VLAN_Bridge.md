@@ -20,7 +20,7 @@ We would probably connect the VLAN to all of the servers in the Edge rack, to en
 
 We can also see from the diagram that the L2-Bridging is done from the virtual distributed router, and not from the Edge Router VM. Finally, we can see that the host that is used for the L2-Bridge, is the one running the "Active Control VM". 
 
-===Active Control VM===
+###Active Control VM
 
 The DLR (Distributed Logical Router) is actually made up of two parts. The VIB that is installed to each host when the cluster is instantiated for NSX, and the DLR Control VM. The role of the Control VM is to be the control plane for the distributed logical router. It is here that LIFs get defined and pushed out of the DLR instanced on the hosts. It is also here that BGP or OSPF is instantiated to communicate with the Edge Router VM(s). Finally it regulates communication with the Controller Cluster, and Management VM so that each host isn't needing to be in constant communication with either, reducing load.
 
@@ -28,7 +28,7 @@ The DLR Control VM is in an Active/Passive pair, and is usually placed in the Ed
 
 Whichever DLR Control VM is active is referred to as the Active Control VM. The active control VM picks a specific DLR to perform the bridging action.
 
-===Bridging Constraints===
+###Bridging Constraints
 
 There are a few caveats with L2 Bridging.
 
