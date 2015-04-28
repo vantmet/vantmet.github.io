@@ -16,7 +16,7 @@ Consider the following image, taken from the VMware NSX Design Guide version 2.1
 
 The diagram shows how the physical workload can be connected to a VLAN, which can then be connected to one (although in reality multiple) but not all hosts. We don't need to span the VLAN to all of our compute racks just to get the VM access to the VLAN. This is a major advantage.
 
-We would probably connect the VLAN to all of the servers in the Edge rack, to ensure that it remained accessible in case of allover.
+We would probably connect the VLAN to all of the servers in the Edge rack, to ensure that it remained accessible in case of fail over. We choose the edge rack so as not to pollute the standardisation of the compute racks. In small environments, this is less of an issue.
 
 We can also see from the diagram that the L2-Bridging is done from the virtual distributed router, and not from the Edge Router VM. Finally, we can see that the host that is used for the L2-Bridge, is the one running the "Active Control VM". 
 
@@ -24,7 +24,7 @@ We can also see from the diagram that the L2-Bridging is done from the virtual d
 
 The DLR (Distributed Logical Router) is actually made up of two parts. The VIB that is installed to each host when the cluster is instantiated for NSX, and the DLR Control VM. The role of the Control VM is to be the control plane for the distributed logical router. It is here that LIFs get defined and pushed out of the DLR instanced on the hosts. It is also here that BGP or OSPF is instantiated to communicate with the Edge Router VM(s). Finally it regulates communication with the Controller Cluster, and Management VM so that each host isn't needing to be in constant communication with either, reducing load.
 
-The DLR Control VM is in an Active/Passive pair, and is usually placed in the Edge Cluster (precisely so that the L2-Bridging can be placed int he edge cluster).
+The DLR Control VM is in an Active/Passive pair, and is usually placed in the Edge Cluster (precisely so that the L2-Bridging can be placed in the edge cluster).
 
 Whichever DLR Control VM is active is referred to as the Active Control VM. The active control VM picks a specific DLR to perform the bridging action.
 
@@ -36,7 +36,7 @@ Firstly the bridging s a 1:1 mapping. You cannot have 1 VLAN bridged onto two VX
 
 Secondly, as the Bridge instance is decided by the DLR Control VM, the bridge instance is tied to a specific host. This will usually mean there is a bottleneck for traffic at the bridge.
 
-Different bridge instances can be tied into different hosts, which improves this bottleneck a little, but also makes the configuration more complex.
+Different bridge instances can be tied into different hosts, which improves this bottleneck a little, but also makes the configuration more complex. Default behavior is to place the Bridge instance on the host with the control VM as in the image, but it can be chosen during configuration, on a case by case basis for each bridge instance.
 
 Although the Control VM decides which DLR instance performs the bridging, no data flows through the control VM. It is all handled by the VIB at the host.
 
