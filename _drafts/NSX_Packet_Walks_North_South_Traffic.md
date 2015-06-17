@@ -36,6 +36,20 @@ The figure below (taken from the VMware NSX Design Guide version 2.1 (fig 41)) w
 
 ![NSX Edge Services Gatewawy]({{ site.url }}/assets/NSOutline.png)
 
+In the top part of the figure we can see the green circle with Arrows, which represents the combination of the DLR and Edge Services Gateway, is conencted to both of the logical switches, and also to the uplink to the L3 network. We can envisage how there could be other uplinks to a WAN, or DMZ (or even multiple DMZs), or to other L3 networks if we had multiple ISPs etc. These uplinks come from the pool of 10 links in the Edge Servces Gateway. The logical Switches connect to the DLR which can conenct to up to 1,000 logical switches.
+
+Connectivity between the DLR and the Edge is through a transit network.
+
 ###Resiliance
 
-###Other Services provided by the Edge
+It is possible to configure BGP, or OSPF between the Edge Services Gateway and the DLR. This means that we can have multiple Edsge Services Gateways (up to 8) with conenctions to a given DLR, which can use ECMP (Equal Cost Multi-Pathing) to spread the North/South traffic load over the multiple gateways and also give resiliance. This is very much and Active/Active setup.
+
+The Alternative is to have the Edge Services Gateway deployed as a HA pair. This means that we get an Active/Passive setup whereby if one Edge failes, the other takes over within a few seconds. This is used when the Active/Active option above is not possible, due to using the other Edge services that are available such as Load Balancing, NAT and the Edge Firewall.
+
+Of course, we can have multiple layers of Edge Services gateways if necessary, with HA Pairs running NAT close to the logical switches, and ECMP aggregating the traffic outbound.
+
+
+###Conclusion
+
+This ends our short series on NSX and Packet flows. Although the later posts have become much more generic and less about how the packets actually move, that to some extent is precisly the point of NSX. We gain the ability to think much more logically about our whole datacenter network, with almost no reliance on physical hardware. We can micro-segment traffic so that only the allowed VMs see it, regardless of where they are running. We can connect to existing networks and migrate slowly and seemlessly into NSX. We can even plug our internet transit directly into hosts and bypass pysical firewall and routing devices.
+
