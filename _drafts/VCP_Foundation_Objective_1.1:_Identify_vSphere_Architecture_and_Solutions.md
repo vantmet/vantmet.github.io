@@ -32,3 +32,16 @@ These editions break down into five basic categories:
 4. vSphere - The baseline for medium to large enterprise. A nice upgrade path from fewer to more features by licensing. Most additional products assume this as a base. Most documentation assumes this edition set.
 5. vSphere with Operations Management - Basically a way to purchase vSphere along with the vRealise suit to gain orchistration, insight and automation.
 
+### Identify the various data center solutions that interact with vSphere (Horizon, SRM, etc.)
+
+In addition to the vSphere system with gives you the ability to virtualise, there are the VMware add in products that extend the functionality.
+
+* Horizon extends vSphere into the Virtual Desktop domain.
+* Site Recovery Manager (SRM) gives active/passive DR capabilities, with the ability to fail your virtual infrastructure to a remote location.
+* vRealise gives operations management and insight, along with Orchestration.
+* vCloud Suite gives the ability to create multi-tenant private clouds.
+* NSX gives fine granied network virtualisation with distributed routing and firewalling along with data protection.
+* VSAN moves storage closer to compute by implementing a virtual SAN in your ESXi hosts
+* Airwatch allows Enterpise mobility and builds on Horizon.
+
+### Explain ESXi and vCenter Server architectures
