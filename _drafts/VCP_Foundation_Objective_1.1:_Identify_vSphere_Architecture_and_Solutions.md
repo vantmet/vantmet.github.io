@@ -24,4 +24,11 @@ There are essentially 11 editions of vSphere available today, although the compa
 | Essentials Advanced                        	| Essentials Std adds vMotion, HA, DP, vShield endpoint, vSphere replication.                                                                                                                                                              	|
 | ESXi Hypervisor Free                       	| Basic Hypervisor. No central management. No advanced features.                                                                                                                                                                           	|
 
+These editions break down into five basic categories:
+
+1. The hypervisor - not really a vSphere eidition at all, and unable to connect to vCenter server. Included for completness.
+2. Essentials - A reduced feature set, only usable on up to three hosts, designed for the SMB. Upgrade capacity is limited.
+3. ROBO (Remote Office/Branch Office) - Designed to add hosts in remote locations to an existing vSphere installation. 
+4. vSphere - The baseline for medium to large enterprise. A nice upgrade path from fewer to more features by licensing. Most additional products assume this as a base. Most documentation assumes this edition set.
+5. vSphere with Operations Management - Basically a way to purchase vSphere along with the vRealise suit to gain orchistration, insight and automation.
 
