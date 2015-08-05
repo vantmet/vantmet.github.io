@@ -6,7 +6,7 @@ categories: vmware nsx VCP
 
 With the release of vSphere 6, VMware have updated the exam structure as normal. This time there are a couple of interesting (to me at least) changes.
 
-The first is to bring the VCP-NV more in line with the other VCP exams. It now has a consistent structure with the DCV (Data Centre), CMA (Cloud) and DTM (Desk Top) variants with the same requirements (except for the additional "Cisco Certified" Route which bypasses the course requirement. This looks like it will stay until the end of January 2016), and with a foundation exam, it tests some general vSphere knowledge as well as just the NSX side.
+The first is to bring the VCP-NV more in line with the other VCP exams. It now has a consistent structure with the DCV (Data Centre), CMA (Cloud) and DTM (Desktop) variants with the same requirements (except for the additional "Cisco Certified" Route which bypasses the course requirement. This looks like it will stay until the end of January 2016), and with a foundation exam, it tests some general vSphere knowledge as well as just the NSX side.
 
 The foundation exam brings us neatly to the second change, which is, ahem, the foundation exam. Exam 2vo-620 is a requirement for all VCP candidates starting from scratch from now going forward. It is the same exam no matter which track of VCP you take and it covers the basic "What is vSphere", "What's it for", "Install", Maintain", and "Troubleshoot". Each VCP track now places their specialised exam on top of this foundation, to dig deeper into the cloud, desktop, data centre, or networking track.
 
