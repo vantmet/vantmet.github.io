@@ -52,6 +52,8 @@ There are a few ways we can design our VMware infrastructure depending upon the 
 
 This is the only solution we can use for the ESXi Free Hypervisor. There can be external storage, but this is not necessary. In this case we use a single ESXi host with no vCenter. 
 
+![ESXi Architecture]({{ site.url }}/assets/esxi_architecture.png)
+
 This gives us the benefits of consolodating physical servers onto a single host and better resource utiliation. 
 
 This system is harder to manage with multiple hosts, and does not scale well. There are no advanced features such as live migrations.
