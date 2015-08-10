@@ -76,7 +76,7 @@ This is the standard SME solution that most people businesses atrt out with. The
 
 This is the mostr scaleable system available. This is used for cloud environments and large deployments, or when VDI is introduced.
 
-![ESXi Architecture]({{ site.url }}/assets/esxi_architecture.png)
+![Enterprise Architecture]({{ site.url }}/assets/enterprise_architecture.png)
 
 In this system the servers doing the work (Compute) are in dedicated clusters. The servers doing management and DMZ traffic get clusters dedicated to them. Servers holding VDI user sessions get dedicated clusters. There are usually multiple vCenter servers, one serving the Management cluster, one serving the compute clusters, and one serving the VDI clusters. This level of segragation makes the system very scaleable. Adding in new compute capacity is a modular process. The seperate clusters also become seperate failure domains. Finally, delegation of admin work is easier and more secure, so VDI admins can be kept away from Compute admin proviledges and vice versa.
 
