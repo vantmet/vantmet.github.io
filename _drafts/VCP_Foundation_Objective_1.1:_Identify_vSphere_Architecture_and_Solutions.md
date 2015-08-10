@@ -45,3 +45,37 @@ In addition to the vSphere system with gives you the ability to virtualise, ther
 * Airwatch allows Enterpise mobility and builds on Horizon.
 
 ### Explain ESXi and vCenter Server architectures
+
+There are a few ways we can design our VMware infrastructure depending upon the constraints. These start simple, and get more complex, but the added complexity often has distinct benefits. For any given customer, a solution will uisually fit broadly into one of these schemes, but I have seen situations where more than one has been implemented.
+
+#### ESXi Standalone
+
+This is the only solution we can use for the ESXi Free Hypervisor. There can be external storage, but this is not necessary. In this case we use a single ESXi host with no vCenter. 
+
+This gives us the benefits of consolodating physical servers onto a single host and better resource utiliation. 
+
+This system is harder to manage with multiple hosts, and does not scale well. There are no advanced features such as live migrations.
+
+I have used this in an instance where I needed a couple of low utilisation VMs at multiple sites, but dodn't need to manage them often, or worry about fail-over. 
+
+#### Single Cluster
+
+This is the solution introduced in the Essentials Product line, and the simplest of Full Fat vSphere deployments. Here we introduce vCenter and Shared Storage, to gain the advantages of live migration, and manageability.
+
+This solution is more scaleable than the first solution we discussed, but the limit of 64 hosts per cluster means that is doesn't scale as well as the final architecture we will look at.
+
+By including Management (i.e. vCenter) and usually DMZ (De-militarized zone, or "unsafe") traffic into the cluster we have a single failure domain where failure of a host, or compromise of a single network affects the whole system.
+
+This is the standard SME solution that most people businesses atrt out with. The constraints are loose enough that this is a good fit for a large number of clients.
+
+####Many, specialised clusters
+
+This is the mostr scaleable system available. This is used for cloud environments and large deployments, or when VDI is introduced.
+
+In this system the servers doing the work (Compute) are in dedicated clusters. The servers doing management and DMZ traffic get clusters dedicated to them. Servers holding VDI user sessions get dedicated clusters. There are usually multiple vCenter servers, one serving the Management cluster, one serving the compute clusters, and one serving the VDI clusters. This level of segragation makes the system very scaleable. Adding in new compute capacity is a modular process. The seperate clusters also become seperate failure domains. Finally, delegation of admin work is easier and more secure, so VDI admins can be kept away from Compute admin proviledges and vice versa.
+
+The downside to this architecture is it's complexity.
+
+####Multiple vCenter systems
+
+The final architecture we will look at runs parallel to the others. It is possible to have multiple vCenters running in deifferent datacenters, and now to vMotion between them. This is new in vSphere 6.0. This means that vCenter traffic can be kept local to a DC and not transported accorss the WAN. 
