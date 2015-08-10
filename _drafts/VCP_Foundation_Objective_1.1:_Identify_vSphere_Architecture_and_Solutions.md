@@ -62,7 +62,9 @@ I have used this in an instance where I needed a couple of low utilisation VMs a
 
 #### Single Cluster
 
-This is the solution introduced in the Essentials Product line, and the simplest of Full Fat vSphere deployments. Here we introduce vCenter and Shared Storage, to gain the advantages of live migration, and manageability.
+This is the solution introduced in the Essentials Product line, and the simplest of Full Fat vSphere deployments. Here we introduce vCenter and Shared Storage, to gain the advantages of live migration, and manageability. The image below shows the architecture. Not that vCenter is shown as a Floating VM. This is because it can be either contained on one of the hosts (usual) or on a bare metal server (unusual). vCenter is also available as a windows application, or as a Virtual Appliance.
+
+![vSphere Architecture]({{ site.url }}/assets/vsphere_architecture.png)
 
 This solution is more scaleable than the first solution we discussed, but the limit of 64 hosts per cluster means that is doesn't scale as well as the final architecture we will look at.
 
