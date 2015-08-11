@@ -96,15 +96,27 @@ A range of security enhancements have been made to vSphere, with the addition of
 
 #### NVIDIA GRID Support
 
+Gives the ability for Horizon View to use hardware GPUs for guest VMs. This means that VDI sessions can benefit from full GPU acceleration for graphics intense workloads. This is either access to the GPU in a time-sliced fashion similar to how ESX grants access to the Host CPU, or in a direct 1 VM to 1 GPU fashion for direct GPU access that bypasses the hypervisor.
+
 #### vCenter Server Architecture Changes
+
+As well as having the option of Windows install or Appliance install, the vCenter Appliance in vSphere 6 brings with it two different architectures. The first embedded runs a single machine with all services. The second - External - runs the PSC and vCenter rolls on separate machines. This allows for more flexibility and scalability. This also makes it easier to upgrade where there are other services using the PSC such as NSX or Horizon.
 
 #### Enhanced Linked Mode
 
+Linked mode is now automatic if two vCenter servers are connected to the same PSC. This makes set up and maintenance much easier.
+
 #### vSphere vMotion
+
+vMotion between data centres is now possible, so long as the connection supports a RTT (Round Trip Time) of 150ms or less, vMotion between different vCenters is also available. This also allows a path to upgrade seamlessly from Windows based vCenter to the Appliance.
 
 #### Multi site Content Library
 
+The content library keeps a synchronised library of ISOs, updates and Templates making automated deployment much easier, and critically, centrally managed.
+
 #### Virtual Volumes
+
+Virtual volumes or vVols, allow fine grained control of the storage underlying VMs. They allow the use of per VM storage and make snapshotting and other management tasks easier. They also allow the underlying storage to advertise capabilities which vCenter can then take advantage of. This is done through the vSphere API for Storage.
 
 ### Determine appropriate vSphere edition based on customer requirements
 
