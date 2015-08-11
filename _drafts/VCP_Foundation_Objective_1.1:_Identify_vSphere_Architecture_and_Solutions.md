@@ -85,3 +85,27 @@ The downside to this architecture is it's complexity.
 ####Multiple vCenter systems
 
 The final architecture we will look at runs parallel to the others. It is possible to have multiple vCenters running in deifferent datacenters, and now to vMotion between them. This is new in vSphere 6.0. This means that vCenter traffic can be kept local to a DC and not transported accorss the WAN. 
+
+### Identify new solutions offered in the current version
+
+Along with the usual slew of performance and scalability improvments, vSphere 6 has introduced new solutions that allow a wide range of systems that were not possible before. These are detailed below.
+
+#### ESXi Security Enhancements
+
+A range of security enhancemnets have been made to vSphere, with the addition of account lockout and password complexity rules.
+
+#### NVIDIA GRID Support
+
+#### vCenter Server Architecture Changes
+
+#### Enhanced Linked Mode
+
+#### vSphere vMotion
+
+#### Multisite Content Library
+
+#### Virtual Volumes
+
+### Determine appropriate vSphere edition based on customer requirements
+
+This has been a long blog post, and if you have stuck with it to the end, well done! It should have served to give you the tools you need to answer the final item on this section though. Determining the edition required sdepends on the customer requirements. Are they small enough that essentials with it's three host limit is suitable? Do they need dvSwitch and so Enterprise Plus licensing? If you have the rest of this post covered, this section should be a breeze.
