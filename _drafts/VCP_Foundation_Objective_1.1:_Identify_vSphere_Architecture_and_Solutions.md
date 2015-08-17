@@ -21,7 +21,7 @@ There are essentially 11 editions of vSphere available today, although the compa
 | Remote office/Branch Office Standard       	| Adds VM capacity into existing Std, Ent, Ent+ system. Packs of 25 VMs. Feature set roughly equivalent to Std.                                                                                                                            	|
 | Remote office/Branch Office Advanced       	| Adds VM capacity into existing Std, Ent, Ent+ system. Packs of 25 VMs. Feature set roughly equivalent to Ent+                                                                                                                            	|
 | Essentials Standard                        	| For very small enterprises. Cut down vCenter(vCenter Server Essentials), up to 3 servers with 2CPUs each                                                                                                                                 	|
-| Essentials Advanced                        	| Essentials Std adds vMotion, HA, DP, vShield endpoint, vSphere replication.                                                                                                                                                              	|
+| Essentials Advanced                        	| Essentials Std plus: vMotion, HA, DP, vShield endpoint, vSphere replication.                                                                                                                                                              	|
 | ESXi Hypervisor Free                       	| Basic Hypervisor. No central management. No advanced features.                                                                                                                                                                           	|
 
 These editions break down into five basic categories:
@@ -62,7 +62,7 @@ I have used this in an instance where I needed a couple of low utilisation VMs a
 
 #### Single Cluster
 
-This is the solution introduced in the Essentials Product line, and the simplest of Full Fat vSphere deployments. Here we introduce vCenter and Shared Storage, to gain the advantages of live migration, and manageability. The image below shows the architecture. Not that vCenter is shown as a Floating VM. This is because it can be either contained on one of the hosts (usual) or on a bare metal server (unusual). vCenter is also available as a windows application, or as a Virtual Appliance.
+This is the solution introduced in the Essentials Product line, and the simplest of Full Fat vSphere deployments. Here we introduce vCenter and Shared Storage, to gain the advantages of live migration, and manageability. The image below shows the architecture. Note that vCenter is shown as a Floating VM. This is because it can be either contained on one of the hosts (usual) or on a bare metal server (unusual). vCenter is also available as a windows application, or as a Virtual Appliance.
 
 ![vSphere Architecture]({{ site.url }}/assets/vsphere_architecture.png)
 
@@ -70,7 +70,7 @@ This solution is more scaleable than the first solution we discussed, but the li
 
 By including Management (i.e. vCenter) and usually DMZ (De-militarised zone, or "unsafe") traffic into the cluster we have a single failure domain where failure of a host, or compromise of a single network affects the whole system.
 
-This is the standard SME solution that most people businesses start out with. The constraints are loose enough that this is a good fit for a large number of clients.
+This is the standard SME solution that most businesses start out with. The constraints are loose enough that this is a good fit for a large number of clients.
 
 ####Many, specialised clusters
 
@@ -84,7 +84,7 @@ The downside to this architecture is it's complexity.
 
 ####Multiple vCenter systems
 
-The final architecture we will look at runs parallel to the others. It is possible to have multiple vCenters running in different data centre, and now to vMotion between them. This is new in vSphere 6.0. This means that vCenter traffic can be kept local to a DC and not transported across the WAN. 
+The final architecture we will look at runs parallel to the others. It is possible to have multiple vCenters running in different data centres, and now to vMotion between them. This is new in vSphere 6.0. This means that vCenter traffic can be kept local to a DC and not transported across the WAN. 
 
 ### Identify new solutions offered in the current version
 
@@ -120,4 +120,4 @@ Virtual volumes or vVols, allow fine grained control of the storage underlying V
 
 ### Determine appropriate vSphere edition based on customer requirements
 
-This has been a long blog post, and if you have stuck with it to the end, well done! It should have served to give you the tools you need to answer the final item on this section though. Determining the edition required sdepends on the customer requirements. Are they small enough that essentials with it's three host limit is suitable? Do they need dvSwitch and so Enterprise Plus licensing? If you have the rest of this post covered, this section should be a breeze.
+This has been a long blog post, and if you have stuck with it to the end, well done! It should have served to give you the tools you need to answer the final item on this section though. Determining the edition required depends on the customer requirements. Are they small enough that essentials with it's three host limit is suitable? Do they need dvSwitch and so Enterprise Plus licensing? If you have the rest of this post covered, this section should be a breeze.
