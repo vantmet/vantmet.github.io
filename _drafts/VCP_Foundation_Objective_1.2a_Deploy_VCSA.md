@@ -12,4 +12,4 @@ The first thing to think about is the location of the database that vCenter will
 
 All clocks in the environment must be synchronised. The best way to do this is to ensure that all ESXi hosts, and the client machine used to install are using the same NTP servers. We conver setting up NTP on ESXi later in the series.
 
-The 
+The final thing is that the DNS should be fully set up before the appliance can be installed. This means that at least, the DNS server given to the apliance should have the host name the appliance will be installed with. It is usually best to ensure that both forward and reverse lookups are correctly set up for all of the infrastructure.
