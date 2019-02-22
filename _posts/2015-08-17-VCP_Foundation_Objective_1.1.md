@@ -72,7 +72,7 @@ By including Management (i.e. vCenter) and usually DMZ (De-militarised zone, or 
 
 This is the standard SME solution that most businesses start out with. The constraints are loose enough that this is a good fit for a large number of clients.
 
-####Many, specialised clusters
+#### Many, specialised clusters
 
 This is the most scaleable system available. This is used for cloud environments and large deployments, or when VDI is introduced.
 
@@ -82,7 +82,7 @@ In this system the servers doing the work (Compute) are in dedicated clusters. T
 
 The downside to this architecture is it's complexity.
 
-####Multiple vCenter systems
+#### Multiple vCenter systems
 
 The final architecture we will look at runs parallel to the others. It is possible to have multiple vCenters running in different data centres, and now to vMotion between them. This is new in vSphere 6.0. This means that vCenter traffic can be kept local to a DC and not transported across the WAN. 
 
