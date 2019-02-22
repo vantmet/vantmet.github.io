@@ -24,3 +24,4 @@ test/vagrant-spec/.vagrant/
 _site/
 .sass-cache/
 *.bak
+_cache
