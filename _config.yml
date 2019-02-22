@@ -34,3 +34,4 @@ redcarpet:
 
 exclude: ['README.md', 'LICENSE']
 include: ['_pages']
+plugins: [jekyll-paginate]
