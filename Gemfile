@@ -6,3 +6,4 @@ gem 'hpricot'
 gem 'jekyll'
 gem 'jekyll-paginate'
 gem 'redcarpet'
+gem "kramdown", ">= 2.3.0"
