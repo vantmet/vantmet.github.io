@@ -1,6 +1,7 @@
 # Jekyll configuration
 
 name: vAntMet
+title: vAntMet's Virtual Musings
 description: vAntMet's virtual musings
 
 # url is currently only used only for the RSS feed in feed.xml

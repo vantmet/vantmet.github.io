@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
-gem 'github-pages'
-gem 'therubyracer',  platforms: :ruby
+
 gem 'jekyll-import'
-gem 'hpricot'
 gem 'jekyll'
 gem 'jekyll-paginate'
-gem 'redcarpet'
-gem "kramdown", ">= 2.3.0"
+
+gem "github-pages", group: :jekyll_plugins
+gem "jekyll-theme-hacker"
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'eventmachine', '~> 1.0.0'
