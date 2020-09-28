@@ -20,7 +20,9 @@ test/vagrant-spec/.vagrant/
 /test/tmp/
 /test/version_tmp/
 /tmp/
+Gemfile.lock
 
+#Jekyll Stuff
 _site/
 .sass-cache/
 *.bak
