@@ -37,3 +37,5 @@ markdown: kramdown
 exclude: ['README.md', 'LICENSE']
 include: ['_pages']
 plugins: [jekyll-paginate]
+
+theme: jekyll-theme-hacker
