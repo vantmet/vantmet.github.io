@@ -1,7 +1,8 @@
 ---
 layout: post
 title: NSX Packet Walks Continued
-categories: vmware nsx
+categories: VMware 
+tags: [nsx]
 status: draft
 ---
 

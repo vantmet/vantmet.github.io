@@ -1,7 +1,8 @@
 ---
 layout: post
 title: VCP Foundation Exam
-categories: vmware nsx VCP
+category: Certification
+tags: vmware nsx VCP
 ---
 
 With the release of vSphere 6, VMware have updated the exam structure as normal. This time there are a couple of interesting (to me at least) changes.

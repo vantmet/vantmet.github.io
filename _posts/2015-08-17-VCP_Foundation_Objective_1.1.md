@@ -1,7 +1,8 @@
 ---
 layout: post
 title: VCP Foundation Objective 1.1 Identify vSphere Architecture and Solutions
-categories: vmware nsx
+category: Certification
+tags: vmware nsx
 ---
 
 This is the start of the series digging into the blueprint for the VCP Foundation Exam. This post will deal with "Objective 1.1 Identify vSphere Architecture and Solutions for a given use case". Let's get started.

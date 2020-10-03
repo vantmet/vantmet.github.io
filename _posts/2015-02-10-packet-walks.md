@@ -1,7 +1,8 @@
 ---
 layout: post
 title: NSX Packet Walks
-categories: vmware nsx
+category: Certification
+tags: vmware nsx
 status: published
 ---
 

@@ -2,7 +2,8 @@
 layout: post
 title: NSX Glossary
 categories: 
-- vmware
+- VMware
+tags:
 - nsx
 status: draft
 type: post
