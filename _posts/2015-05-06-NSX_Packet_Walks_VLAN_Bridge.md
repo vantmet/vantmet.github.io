@@ -1,7 +1,8 @@
 ---
 layout: post
 title: NSX Packet Walks - VLAN Bridge
-categories: vmware nsx
+categories: VMware 
+tags: [nsx]
 ---
 
 This is the fourth post in the NSX Packet Walks series. You probably want to start at [the first post](http://vantmet.github.io/2015/02/10/packet-walks).

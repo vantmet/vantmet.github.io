@@ -1,7 +1,8 @@
 ---
 layout: post
 title: VCPN610 Experience
-categories: 
+category: Certification
+tags: 
 - vmware
 - nsx
 status: draft

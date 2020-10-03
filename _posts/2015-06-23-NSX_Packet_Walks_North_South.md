@@ -1,7 +1,8 @@
 ---
 layout: post
 title: NSX Packet Walks - North/South Traffic
-categories: vmware nsx
+categories: VMware 
+tags: [nsx]
 ---
 
 This is my final port in the NSX Packet walk series. So far I have discussed only so called "East/West" traffic. That is traffic which is moving from one VM, or physical machine, in our network to another. This traffic will never leave the datacenter, and in a lot of cases, will never leave the same rack in a small system, or NSX system.
