@@ -1,30 +1,5 @@
-# Vagrant Stuff
-acceptance_config.yml
-boxes/*
-/.vagrant
-/website/.vagrant
-/website/build
-/vagrant-spec.config.rb
-test/vagrant-spec/.vagrant/
-*.log
-
-#Ruby Stuff
-*.gem
-*.rbc
-/.config
-/coverage/
-/InstalledFiles
-/pkg/
-/spec/reports/
-/spec/examples.txt
-/test/tmp/
-/test/version_tmp/
-/tmp/
-Gemfile.lock
-
-#Jekyll Stuff
-_site/
-.sass-cache/
-*.bak
-_cache
-\.jekyll-metadata
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor

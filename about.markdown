@@ -1,7 +1,8 @@
 ---
-layout: default
-title: Big Scary Disclaimer
+layout: post
+title: About
 permalink: /about/
+author: vAntMet
 ---
 
 ### Big Scary Disclaimer
