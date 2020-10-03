@@ -1,0 +1,18 @@
+---
+---
+
+@import "{{ site.theme }}";
+#sidebar {
+  width: 270px;
+  float: left;
+  position: fixed;
+  }
+  
+.flex-container {
+  width: 100%;
+  }
+
+#main_content {
+  float: right;
+  width: 90%;
+  }
