@@ -1,15 +1,24 @@
 <div class="sidebar well">
-    <h1>Recent Posts</h1>
-    <ul>
-        {% for post in site.posts limit:5 %}
-          <li><a href="{{ site.baseurl}}{{ post.url }}">{{ post.title }}</a></li>
-        {% endfor %}
-    </ul>
+  <h1>Recent Posts</h1>
+  <ul>
+    {% for post in site.posts limit:5 %}
+      <li><a href="{{ site.baseurl}}{{ post.url }}">{{ post.title }}</a></li>
+    S{% endfor %}
+  </ul>
 </div>
 
 <div class="sidebar well">
-{% include cat-list.html %}
+  <h1>Categories</h1>
+  <ul>
+    {% assign sorted_cats = site.categories | sort %}
+    {% for cat in sorted_cats  %}
+      <li><a href="{{ site.baseurl }}/{{ cat[0] }}.html">{{ cat[0] }}</a></li>
+    {% endfor %}	
+  </ul>
 </div>
 <div class="sidebar well">
-{% include links-list.html %}
+  <h1>Links</h1>
+  <ul>
+    <li><a href="http://planetvm.net/blog/">PlanetVM</a></li>
+  </ul>
 </div>
