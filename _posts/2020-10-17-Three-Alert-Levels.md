@@ -4,7 +4,7 @@ title: Three Alert Levels
 categories: Life
 ---
 
-I've read far more self help books than is good for me. I've read about far too many *productivity systems* too. In my work as a SysAdmin I get a *lot* of emails, chat notifications, and general interruptions. I bullet journal. I've tried the Pomodoro technique. But one of the most useful things I've come across, applied to both my personal and work lives is a little thing I picked up for the [Google SRE books](https://landing.google.com/sre/books/). The concept that information coming from systems should be classified as one of three types.
+I've read far more self-help books than is good for me. I've read about far too many *productivity systems* too. In my work as a SysAdmin I get a *lot* of emails, chat notifications, and general interruptions. I bullet journal. I've tried the Pomodoro technique. But one of the most useful things I've come across, applied to both my personal and work lives is a little thing I picked up for the [Google SRE books](https://landing.google.com/sre/books/). The concept that information coming from systems should be classified as one of three types.
 
 ## Type 0 - File under B
 
@@ -20,6 +20,6 @@ The SAN hit the point where it needs more disks ordering. Reminder it's your ann
 
 ## Type 3 - Critical
 
-Power just went off in a DC; A critical service died; Account doesn't have funds for a payment due today; Partner's car broke down; Call from School. These are things that need action **now**. Not tomorrow, not when you get around to it. Stop what you are doing and fix this. These are the ones that go PING on your phone. In a work environnement, I've often filtered these alerts through to [OpsGenie](https://www.atlassian.com/software/opsgenie) so that the right person bets the message in the right way, no matter the day or night, and the issue can be escalated if it's not picked up. Personally, it's the contacts that bypass do not disturb.
+Power just went off in the DC; A critical service died; Account doesn't have funds for the payment due today; Partner's car broke down; Call from School. These are things that need action **now**. Not tomorrow, not when you get around to it. Stop what you are doing and fix this. These are the ones that go PING on your phone. In a work environment, I've often filtered these alerts through to [OpsGenie](https://www.atlassian.com/software/opsgenie) so that the right person bets the message in the right way, no matter the day or night, and the issue can be escalated if it's not picked up. Personally, it's the contacts that bypass do not disturb.
 
-I like to think if this as, Ignore it, Plan It, Do it. Stuff I can ignore shouldn't hit my inbox. Stuff that needs planning is a ticket, and stuff that needs to be done now, is. That is the key for me to Inbox Zero. 
+I like to think of this as, Ignore it, Plan It, Do it. Stuff I can ignore shouldn't hit my inbox. Stuff that needs planning is a ticket, and stuff that needs to be done now, is. That is the key for me to Inbox Zero.
