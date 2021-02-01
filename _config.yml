@@ -21,13 +21,13 @@
 title: vAntMet's Virtual Musings
 email: anthony@anferny.me.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  Writings and ditherings about all things I encounter as I go through a worklife.
+  Writings and ditherings about all things I encounter as I go through a work life.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: vantmet
 github_username:  vantmet
 author: vAntMet
-  twitter: vAntMet
+twitter: vAntMet
 
 # Build settings
 # theme: minima
