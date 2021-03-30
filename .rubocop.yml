@@ -1,2 +1,2 @@
-Style/StringLiterals
+Style/StringLiterals:
   EnforcedStyle: double_quotes
